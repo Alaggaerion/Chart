@@ -1,0 +1,44 @@
+﻿<Window x:Class="WpfDBChart.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfDBChart"
+        xmlns:myChart ="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+        mc:Ignorable="d"
+        Title="Data base chart" Height="500" Width="1000">
+    <Window.Resources>
+        <local:MonthDataCollection x:Key="MonthDataCollection"/>
+    </Window.Resources>
+    <Grid>
+        <myChart:Chart Name="monthChart" Title="Entries per months" Background="LightBlue">
+            <myChart:Chart.Axes>
+                <myChart:LinearAxis Orientation="Y" Minimum="0" Maximum="10" Interval="1" ShowGridLines="True"></myChart:LinearAxis>
+                <myChart:CategoryAxis Orientation="X">
+                    <myChart:CategoryAxis.AxisLabelStyle>
+                        <Style TargetType="myChart:AxisLabel">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="myChart:AxisLabel">
+                                        <TextBlock Text="{TemplateBinding FormattedContent}">
+                                            <TextBlock.LayoutTransform>
+                                                <RotateTransform Angle="-60"/>
+                                            </TextBlock.LayoutTransform>
+                                        </TextBlock>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </myChart:CategoryAxis.AxisLabelStyle>
+                </myChart:CategoryAxis>
+            </myChart:Chart.Axes>
+            <myChart:Chart.Series>
+                <myChart:LineSeries Title="Entries"
+                    ItemsSource= "{DynamicResource MonthDataCollection}"
+                    IndependentValueBinding="{Binding Path=Month}"
+                    DependentValueBinding="{Binding Path=Count}">
+                </myChart:LineSeries>
+            </myChart:Chart.Series>
+        </myChart:Chart>
+    </Grid>
+</Window>
